@@ -1,7 +1,7 @@
 /*
 * Title       Smart Hand Controller (based on TeenAstro)
 *
-* Copyright (C) 2018 to 2021 Charles Lemaire, Howard Dutton, and Others
+* Copyright (C) 2018 to 2025 Charles Lemaire, Howard Dutton, and Others
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -24,53 +24,122 @@
 * Description
 *
 * Smart Hand controller addon for OnStep
-* for the actual hardware see: https://easyeda.com/hdutton/HC-20e242d665db4c85bb565a0cd0b52233
+* for the actual hardware see: https://oshwlab.com/hdutton/smart-hand-controller2-plus
 */
 
 #define Product               "SHC"
-#define FirmwareVersionMajor  "3"
+#define FirmwareVersionMajor  "4"
 #define FirmwareVersionMinor  "03"
 #define FirmwareVersionPatch  "b"
 
 #include "src/Common.h"
-NVS nv;
+#include "src/Validate.h"
+
+#include "src/lib/nv/Nv.h"
 #include "src/lib/tasks/OnTask.h"
+#include "src/lib/convert/Convert.h"
+
+#include "src/libApp/weather/Weather.h"
+
 #include "src/userInterface/UserInterface.h"
+
+#include "src/plugins/Plugins.config.h"
 
 #if DEBUG == PROFILER
   extern void profiler();
 #endif
 
 const char Version[] = "Version " FirmwareVersionMajor "." FirmwareVersionMinor FirmwareVersionPatch;
-const int pin[7] = {B_PIN0, B_PIN1, B_PIN2, B_PIN3, B_PIN4, B_PIN5, B_PIN6};
-const int active[7] = {B_PIN0_ACTIVE_STATE, B_PIN1_ACTIVE_STATE, B_PIN2_ACTIVE_STATE, B_PIN3_ACTIVE_STATE, B_PIN4_ACTIVE_STATE, B_PIN5_ACTIVE_STATE, B_PIN6_ACTIVE_STATE};
+const KeyPad::Pin pins[7]= {
+  {B_PIN0, B_PIN0_ACTIVE_STATE, B_PIN0_INPUT_MODE},
+  {B_PIN1, B_PIN1_ACTIVE_STATE, B_PIN1_INPUT_MODE},
+  {B_PIN2, B_PIN2_ACTIVE_STATE, B_PIN2_INPUT_MODE},
+  {B_PIN3, B_PIN3_ACTIVE_STATE, B_PIN3_INPUT_MODE},
+  {B_PIN4, B_PIN4_ACTIVE_STATE, B_PIN4_INPUT_MODE},
+  {B_PIN5, B_PIN5_ACTIVE_STATE, B_PIN5_INPUT_MODE},
+  {B_PIN6, B_PIN6_ACTIVE_STATE, B_PIN6_INPUT_MODE},
+};
 
-void systemServices() {
-  nv.poll();
-}
+#if WEATHER != OFF
+  void weatherServices() {
+    static int i = 0;
+    char command[80];
+
+    switch (i++ % 3) {
+      case 0: sprintF(command, ":SX9A,%0.1f#", weather.getTemperature()); onStepLx200.Set(command); break;
+      case 1: sprintF(command, ":SX9B,%0.1f#", weather.getPressure()); onStepLx200.Set(command); break;
+      case 2: sprintF(command, ":SX9C,%0.1f#", weather.getHumidity()); onStepLx200.Set(command); break;
+    }
+  }
+#endif
 
 void setup(void) {
-  
+
   // start debug serial port
   if (DEBUG == ON || DEBUG == VERBOSE) SERIAL_DEBUG.begin(SERIAL_DEBUG_BAUD);
   delay(2000);
 
   VF("MSG: Smart Hand Controller "); V(FirmwareVersionMajor); V("."); V(FirmwareVersionMinor); VL(FirmwareVersionPatch);
   VF("MSG: MCU = "); VLF(MCU_STR);
-  
-  HAL_INIT();
-  HAL_NV_INIT();
-  
-  // System services
-  // add task for system services, runs at 10ms intervals so commiting 1KB of NV takes about 10 seconds
-  VF("MSG: Setup, starting system services task (rate 10ms priority 7)... ");
-  if (tasks.add(10, 0, true, 7, systemServices, "SysSvcs")) { VL("success"); } else { VL("FAILED!"); }
 
-  userInterface.init(Version, pin, active, SERIAL_ONSTEP_BAUD_DEFAULT, static_cast<OLED>(DISPLAY_OLED));
+  HAL_INIT();
+  WIRE_INIT();
+
+  // start the NV service task at priority level 5
+  if (!nv().init(5)) {
+    DLF("WRN: Setup, NV (EEPROM/FRAM/Flash/etc.) device not found!");
+  }
+
+  #if defined(NV_WIPE) && NV_WIPE == ON
+    nv().wipe();
+  #endif
+
+  // If necessary, power up the display
+  #ifdef DISPLAY_POWER_PIN
+    pinMode(DISPLAY_POWER_PIN, OUTPUT);
+    digitalWrite(DISPLAY_POWER_PIN, HIGH);
+  #endif
+
+  userInterface.init(Version, pins, SERIAL_ONSTEP_BAUD_DEFAULT, static_cast<OLED>(DISPLAY_OLED));
+
+  #if WEATHER != OFF
+    // get any BME280 or BMP280 ready
+    weather.init();
+
+    // add task to forward readings to OnStep
+    VF("MSG: Setup, starting weather services task (rate 3333ms priority 7)... ");
+    if (tasks.add(3333, 0, true, 7, weatherServices, "WeaFwd")) { VL("success"); } else { VL("FAILED!"); }
+  #endif
 
   // start task manager debug events
   #if DEBUG == PROFILER
     tasks.add(142, 0, true, 7, profiler, "Profilr");
+  #endif
+
+  // start any plugins
+  #if PLUGIN1 != OFF
+    PLUGIN1.init();
+  #endif
+  #if PLUGIN2 != OFF
+    PLUGIN2.init();
+  #endif
+  #if PLUGIN3 != OFF
+    PLUGIN3.init();
+  #endif
+  #if PLUGIN4 != OFF
+    PLUGIN4.init();
+  #endif
+  #if PLUGIN5 != OFF
+    PLUGIN5.init();
+  #endif
+  #if PLUGIN6 != OFF
+    PLUGIN6.init();
+  #endif
+  #if PLUGIN7 != OFF
+    PLUGIN7.init();
+  #endif
+  #if PLUGIN8 != OFF
+    PLUGIN8.init();
   #endif
 
   VLF("MSG: Starting UI loop");

@@ -1,4 +1,3 @@
-
 .vscode/*
 test/*
 .pio/*
@@ -7,3 +6,8 @@ test/*
 /lib/*
 /__vm/*
 /__vm
+
+*.json
+esp32.svd
+debug.cfg
+debug.svd

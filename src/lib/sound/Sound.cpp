@@ -6,6 +6,7 @@
 #ifdef STATUS_BUZZER
 
 #include "../tasks/OnTask.h"
+#include "../gpioEx/GpioEx.h"
 
 void Sound::init() {
   #if STATUS_BUZZER == ON
@@ -20,6 +21,7 @@ void Sound::init() {
   void buzzerOff() {
     digitalWriteEx(STATUS_BUZZER_PIN, !STATUS_BUZZER_ON_STATE);
     tasks.setDurationComplete(_buzzerHandle);
+    _buzzerHandle = 0;
   }
 #endif
 

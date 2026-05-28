@@ -7,6 +7,7 @@
 #define LF_GREEK u8g2_font_unifont_t_greek  // 10 pixel height
 #define LF_STANDARD u8g2_font_helvR10_tf    // 11 pixel height
 #define LF_LARGE u8g2_font_helvR12_tf       // 12 pixel height
+#define LF_PASSWORD u8g2_font_t0_17_mf      // 11 pixel height monospaced
 
 // General
 #define L_OK "OK"
@@ -17,16 +18,31 @@
 #define L_NOW "Now"
 #define L_SETV "Set"
 #define L_ALL "All"
+#define L_USE "Use"
 #define L_SET_STATE "Set State"
 #define L_VALUE "Value"
 #define L_WITHIN "Within"
 #define L_DISABLE "Disable"
 #define L_CANCELED "Canceled"
+#define L_CURRENT "Current"
 #define L_FAILED "Failed"
 #define L_DEGREE "degree"
 #define L_ARCSEC "arc-sec"
 #define L_MICRON_PER_C "um/C"
 #define L_DAYS "Days"
+#define L_SHOW_EDIT "- Edit -"
+#define L_SHOW_KNOWN "- Show Known -"
+#define L_UPDATING "Updating"
+#define L_SCANNING "Scanning"
+#define L_PLEASE_WAIT "Please wait"
+#define L_CONFIRM "Are you sure?"
+#define L_CLEAR "Clear"
+#define L_MEMORY "Memory"
+#define L_OVERWRITE "Overwrite"
+#define L_PASSWORD "Password"
+#define L_DHCP_LINE1 "DHCP disable can"
+#define L_DHCP_LINE2 "disrupt operation!"
+#define L_POWERING "Powering"
 
 // common abbreviations
 #define L_TELESCOPE "Scope" // telescope
@@ -123,7 +139,6 @@
 // PEC menu
 #define L_PEC_PLAY "Play"
 #define L_PEC_STOP "Stop"
-#define L_PEC_CLEAR "Clear"
 #define L_PEC_RECORD "Record"
 #define L_PEC_WRITENV "Write to NV"
 #define L_PEC "PEC"
@@ -159,9 +174,10 @@
 #define L_MOUNT_LIMIT_MERIDIAN_EAST "Meridn Limit E"
 #define L_MOUNT_LIMIT_MERIDIAN_WEST "Meridn Limit W"
 #define L_MOUNT_PPS "Preferred Pier Side"
-#define L_PPS_BEST "Best"
 #define L_PPS_EAST "East"
 #define L_PPS_WEST "West"
+#define L_PPS_BEST "Best"
+#define L_PPS_AUTO "Auto"
 
 // -------------------- menu, settings ---------------------
 
@@ -176,7 +192,7 @@
 #define L_SET_BUZ "Buzzer"
 #define L_SET_MERIDIAN_FLIP "Meridian Flip"
 #define L_SET_CONFIG "Configuration"
-#define L_SET_VERSION "Firmware Ver"
+#define L_SET_VERSION "Firmware"
 #define L_SETTINGS "Settings"
 
 // date/time
@@ -222,6 +238,7 @@
 #define L_ROT_PA "Move to PA"
 #define L_ROT_REV "Reverse"
 #define L_ROTATOR "Rotator"
+#define L_ROTATE "Rot"
 #define L_ROT_AT_HOME_ZERO "At Home/Zero?"
 #define L_ROT_REVERSE "Reverse"
 
@@ -229,6 +246,7 @@
 #define L_FOC_RET_HOME "Return Home"
 #define L_FOC_AT_HOME  "At Home"
 #define L_FOCUSER "Focuser"
+#define L_FOCUS "Foc"
 #define L_AUX_FEATURE "Aux Feature"
 #define L_FOC_AT_HALF "At Half Trvl?"
 #define L_FOC_TC "Temp. Comp?"
@@ -264,12 +282,10 @@
 #define L_SG_TARGET "Target"
 
 // return home or reset at home
-#define L_SG_HOME1 "Goto Home will"
-#define L_SG_HOME2 "clear the Model"
-#define L_SG_HOME3 "Goto Home"
-#define L_SG_HOME4 "Reset at"
-#define L_SG_HOME5 "Goto"
-#define L_SG_HOME6 "Home Position"
+#define L_SG_HOME1 "Goto Home"
+#define L_SG_HOME2 "Reset at"
+#define L_SG_HOME3 "Goto"
+#define L_SG_HOME4 "Home Position"
 #define L_SG_NO_OBJECT "No Object"
 #define L_SG_NO_INIT "Not Init'd"
 
@@ -341,9 +357,10 @@
 #define L_SG_FILT_BY_PER_MAX "Filter Var* Period"
 
 // ------------------- SmartController.h -----------------------
-#define L_WIFI_SELECT "SHC, Select WiFi:"
-#define L_WIFI_CONNECTION1 "Starting WiFi:"
-#define L_WIFI_CONNECTION2 "Restart WiFi:"
+#define L_WIFI_SELECT "OnStep Connection:"
+#define L_WIFI_SELECT_EDIT "Edit Connection:"
+#define L_WIFI_CONNECTION "Starting WiFi:"
+#define L_BT_CONNECTION "Starting BT:"
 #define L_LOOKING "Looking for"
 #define L_WARNING "Warning"
 #define L_CONNECTION "Connection"
@@ -352,7 +369,6 @@
 #define L_COORDINATES "Coordinates"
 #define L_OBSERVED_PLACE "Observed Place."
 #define L_WARNING "Warning"
-#define L_FAILED "Failed"
 #define L_REBOOT "REBOOT"
 #define L_DEVICE "DEVICE"
 #define L_STAR "Star"
@@ -370,14 +386,6 @@
 #define L_FKEY_LAMP_UP "Util Brighter"
 #define L_FKEY_RETI_DN "Reticle Dimmer"
 #define L_FKEY_RETI_UP "Reticle Brighter"
-#define L_FKEY_FOC_DN "Focus Out"
-#define L_FKEY_FOC_UP "Focus In"
-#define L_FKEY_FOCF_DN "Focus Fast"
-#define L_FKEY_FOCF_UP "Focus Fast"
-#define L_FKEY_ROT_DN "Rotate Ccw"
-#define L_FKEY_ROT_UP "Rotate Cw"
-#define L_FKEY_ROTF_DN "Rotate Fast"
-#define L_FKEY_ROTF_UP "Rotate Fast"
 #define L_SUCCESS "Success"
 #define L_ADD_STAR "Add Star"
 #define L_SUCCESS "Success"

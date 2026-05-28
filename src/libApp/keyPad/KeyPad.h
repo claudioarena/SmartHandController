@@ -2,11 +2,17 @@
 // Button pad
 #pragma once
 
+#include "../../Common.h"
 #include "../../lib/pushButton/PushButton.h"
 
 class KeyPad {
 public:
-  void init(const int pin[7], const int active[7], int thresholdNS, int thresholdEW);
+  struct Pin {
+    int pinNumber;
+    int activeState;
+    int inputMode;
+  };
+  void init(const Pin pins[7], int thresholdNS, int thresholdEW);
 
   void poll();
   bool anyPressed();
@@ -17,7 +23,7 @@ public:
   Button *shift, *n, *s, *e, *w, *F, *f;
 
 private:
-  int debounceMs = 30;
+  int debounceMs = BUTTON_DEBOUNCE_MS;
   bool ready = false;
 };
 

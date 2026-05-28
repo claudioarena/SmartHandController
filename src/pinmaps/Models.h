@@ -10,16 +10,27 @@
 #include "../HAL/HAL.h"
 #include "../locales/Locale.h"
 
-// Default pin state; true for active LOW, false if active HIGH
-#define B_PIN0_ACTIVE_STATE LOW
-#define B_PIN1_ACTIVE_STATE LOW
-#define B_PIN2_ACTIVE_STATE LOW
-#define B_PIN3_ACTIVE_STATE LOW
-#define B_PIN4_ACTIVE_STATE LOW
-#define B_PIN5_ACTIVE_STATE LOW
-#define B_PIN6_ACTIVE_STATE LOW
+#if defined(ESP32)
+  #define PINMAP_STR "ESP32"
+  #include "Pins.Esp32.h"
+#elif defined(ARDUINO_TEENSY32)
+  #define PINMAP_STR "TEENSY3.2"
+  #include "Pins.Teensy.h"
+#elif defined(ARDUINO_TEENSY35)
+  #define PINMAP_STR "TEENSY3.5"
+  #include "Pins.Teensy.h"
+#elif defined(ARDUINO_TEENSY36)
+  #define PINMAP_STR "TEENSY3.6"
+  #include "Pins.Teensy.h"
+#elif defined(ARDUINO_TEENSY40)
+  #define PINMAP_STR "TEENSY4.0"
+  #include "Pins.Teensy.h"
+#elif defined(ARDUINO_TEENSY41)
+  #define PINMAP_STR "TEENSY4.1"
+  #include "Pins.Teensy.h"
+#else
+  #error "Configuration (Arduino): select either a Teensy4.0 or ESP32 device"
+#endif
 
-#include "Pins.Esp32.h"
-#include "Pins.Esp8266.h"
-#include "Pins.M0.h"
-#include "Pins.Teensy.h"
+// all unassigned pins OFF
+#include "Pins.Defaults.h"
