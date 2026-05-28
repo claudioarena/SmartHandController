@@ -1,4 +1,9 @@
 
-*.json
-*.vcxproj*
-__vm/*
+.vscode/*
+test/*
+.pio/*
+/include/README
+/lib/README
+/lib/*
+/__vm/*
+/__vm

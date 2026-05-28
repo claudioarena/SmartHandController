@@ -29,7 +29,7 @@
 #define UTILITY_LIGHT                 OFF //    OFF, n. Where n=0..255 (0..100%) activates feature sets default brightness.   Adjust
 
 // DISPLAY -------------------------------------------------------------------------------------------------------------------------
-#define DISPLAY_AMBIENT_CONDITIONS    OFF //    OFF, ON to show ambient conditions in the display rotation                    Option
+#define DISPLAY_AMBIENT_CONDITIONS     ON //    OFF, ON to show ambient conditions in the display rotation                    Option
 #define DISPLAY_WRAP_MENUS            OFF //    OFF, ON allows menus to wrap so moving past bottom returns to top, etc.       Option
 #define DISPLAY_24HR_TIME              ON //     ON, OFF to use 12 hour format for entering time.                             Option
 
@@ -38,7 +38,7 @@
 
 // ST4 AUXILIARY INTERFACE ---------------------------------------------------------------------------------------------------------
 // *** It is up to you to verify the interface meets the electrical specifications of any connected device, use at your own risk ***
-#define ST4_AUX_INTERFACE             OFF //    OFF, ON, ON_PULLUP enables auxillary "pass-through" ST4 interface.            Option
+#define ST4_AUX_INTERFACE              ON //    OFF, ON, ON_PULLUP enables auxillary "pass-through" ST4 interface.            Option
 
 // CATALOGS ------------------------------------------------------------------------------------------------------------------------
 // Advanced users can also customize which celestial object catalogs are included or even add new catalogs using Config.catalogs.h
